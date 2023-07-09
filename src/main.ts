@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { MyInterceptor } from './interceptors/MyInterceptor'
+import { ValidationPipe } from '@nestjs/common'
+import { MyExceptionFilter } from './interceptors/myException.filter'
 
 const start = async () => {
   try {
@@ -13,7 +16,8 @@ const start = async () => {
         maxAge: 3600
       }
     })
-
+    app.useGlobalPipes(new ValidationPipe())
+    app.useGlobalFilters(new MyExceptionFilter())
     const config = new DocumentBuilder()
       .setTitle('BOOKS')
       .setDescription('Документация REST API')

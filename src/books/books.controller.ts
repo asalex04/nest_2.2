@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors, UsePipes } from '@nestjs/common'
 import { BooksService } from './books.service'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Book, BookDocument } from './schemas/book.schema'
 import { IParamId } from './interfaces/param_id'
 import { CreateBookDto } from './interfaces/dto/createBook.dto'
 import { UpdateBookDto } from './interfaces/dto/updateBook.dto'
+import { MyInterceptor } from 'src/interceptors/MyInterceptor'
+import { BookValidationPipe } from 'src/interceptors/book.validation.pipe'
 
 @ApiTags('Books')
+@UseInterceptors(MyInterceptor)
 @Controller('books')
 export class BooksController {
   constructor(private booksService: BooksService) {}
@@ -28,10 +31,11 @@ export class BooksController {
 
   @ApiOperation({ summary: 'Изменение книги' })
   @ApiResponse({ status: 200, type: Book })
+  @UsePipes(BookValidationPipe)
   @Put('/update/:id')
   updateBook(
     @Body() dto: UpdateBookDto,
-    @Param() { id }: IParamId
+    @Param('id', BookValidationPipe) id: string
   ) {
     return this.booksService.updateBook(dto, id)
   }
@@ -40,7 +44,7 @@ export class BooksController {
   @ApiOperation({ summary: 'Удаление книги' })
   @ApiResponse({ status: 200 })
   @Delete('/delete/:id')
-  deleteBook(@Param() { id }: IParamId) {
+  deleteBook(@Param('id') id: string) {
     return this.booksService.deleteBook(id)
   }
 }
