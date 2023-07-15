@@ -13,7 +13,7 @@ const start = async () => {
         maxAge: 3600
       }
     })
-
+    app.setGlobalPrefix('api')
     const config = new DocumentBuilder()
       .setTitle('BOOKS')
       .setDescription('Документация REST API')
