@@ -13,7 +13,7 @@ export class BooksService {
   ) {}
 
   async getAllBooks(): Promise<Book[]> {
-    return this.bookModel.find()
+    return await this.bookModel.find()
   }
 
   async createBook(dto: CreateBookDto): Promise<Book> {

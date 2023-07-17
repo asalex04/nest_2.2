@@ -14,8 +14,8 @@ export class BooksController {
   @ApiOperation({ summary: 'Все книги' })
   @ApiResponse({ status: 200, type: Book })
   @Get('/')
-  getAllBooks(): Promise<Book[]> {
-    return this.booksService.getAllBooks()
+  async getAllBooks(): Promise<Book[]> {
+    return await this.booksService.getAllBooks()
   }
 
   @ApiOperation({ summary: 'Создание книги' })
