@@ -5,8 +5,8 @@ export type BookCommentDocument = BookComment & Document;
 
 @Schema()
 export class BookComment {
-  @Prop({ required: true })
-  public id: number;
+  // @Prop({ required: true })
+  // public id: number;
 
   @Prop()
   public bookId: number;
@@ -15,4 +15,4 @@ export class BookComment {
   public comment: string;
 }
 
-export const BookSchema = SchemaFactory.createForClass(BookComment);
+export const BookCommentSchema = SchemaFactory.createForClass(BookComment);

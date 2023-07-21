@@ -8,16 +8,18 @@ import { CreateCommentDto } from './interfaces/dto/createComment.dto'
 @ApiTags('Comments')
 @Controller('book-comment')
 export class BookCommentController {
-  constructor(private bookCommentService: BookCommentService) {}
+  constructor(
+    private bookCommentService: BookCommentService
+  ) {}
 
-  @ApiOperation({ summary: 'Все книги' })
+  @ApiOperation({ summary: 'Все комментарии по книге' })
   @ApiResponse({ status: 200, type: [BookComment]})
   @Get('/:id')
   findAllBookComment(@Param() { bookId }: IbookId): Promise<BookComment[]> {
     return this.bookCommentService.findAllBookComment(bookId)
   }
 
-  @ApiOperation({ summary: 'Создание комметария' })
+  @ApiOperation({ summary: 'Создание комментария' })
   @ApiResponse({ status: 201, type: BookComment })
   @Post('/create')
   createComment(@Body() dto: CreateCommentDto): Promise<BookComment> {
