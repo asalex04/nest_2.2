@@ -18,7 +18,6 @@ button.addEventListener('click', () => {
   bookId1.value = ''
 })
 
-//Отображаем сообщения пользователям
 function loadDate(data) {
   let messages = '';
   data.map((message) => {
