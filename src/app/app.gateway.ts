@@ -22,25 +22,13 @@ export class AppGateway {
   @SubscribeMessage('create')
   async addComment(client: any, payload: CreateCommentDto): Promise<void> {
     await this.bookCommentService.createComment(payload)
-    this.server.emit('recMessage', payload);
   }
 
   @SubscribeMessage('comments')
   async getAllComments(client: any, payload: number): Promise<BookComment[]> {
-    return await this.bookCommentService.findAllBookComment(payload)
+    const comments = await this.bookCommentService.findAllBookComment(payload)
+    this.server.emit('recMessage', comments)
+    return comments
   }
 
-  @SubscribeMessage('events')
-  onEvent(): Observable<WsResponse<number>> {
-    const event = 'events';
-    const response = [1, 2, 3];
-    return from(response).pipe(
-      map(data => ({ event, data })),
-    );
-  }
-  @SubscribeMessage('server')
-  onEventWithServer() {
-    console.log(this.server.sockets);
-    return 'OK';
-  }
 }

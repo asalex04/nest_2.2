@@ -12,11 +12,13 @@ export class BookCommentService {
   ) {}
 
   async findAllBookComment(bookId): Promise<BookComment[]> {
-    return await this.bookCommentModel.find({ bookId })
+    return await this.bookCommentModel.find({ bookId }).select('-__v')
   }
 
   async createComment(dto: CreateCommentDto): Promise<BookComment> {
-    const newcomment = await new this.bookCommentModel(dto)
-    return await newcomment.save()
+    return await new this.bookCommentModel({
+      bookId: Number(dto.bookId),
+      comment: dto.comment
+    }).save()
   }
 }

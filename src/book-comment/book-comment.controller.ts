@@ -14,7 +14,7 @@ export class BookCommentController {
 
   @ApiOperation({ summary: 'Все комментарии по книге' })
   @ApiResponse({ status: 200, type: [BookComment]})
-  @Get('/:id')
+  @Get('/:bookId')
   findAllBookComment(@Param() { bookId }: IbookId): Promise<BookComment[]> {
     return this.bookCommentService.findAllBookComment(bookId)
   }
